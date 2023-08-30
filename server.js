@@ -62,6 +62,6 @@ app.get('/profile/:id', (req, res) => {
 
 app.put('/image', (req, res) => {image.handleImage(db, bcrypt,res,req)})
 app.post('/imageurl', (res,req) => image.handleApicall(res,req))
-app.listen(3000, () => {
-    console.log('app is running on port 3000')
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`app is running on port ${process.env.PORT}`)
 })
