@@ -1,5 +1,5 @@
 
-const Clarifai = require('clarifai');
+import Clarifai from 'clarifai';
 
 
 
@@ -62,7 +62,7 @@ const handleImage = (db, bcrypt,res,req) => {
     .catch(err => res.status(404).json('unable to get entries'))
 }
 
-module.exports = {
+export default  {
     handleImage,
     handleApicall
-}
+};

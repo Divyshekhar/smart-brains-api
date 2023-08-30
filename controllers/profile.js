@@ -15,6 +15,4 @@ const handleProfile =(req, res, db) => {
   
 
 }
-module.exports = {
-    handleProfile: handleProfile
-}
+export default handleProfile;

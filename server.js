@@ -1,11 +1,11 @@
-const express = require('express');
-const cors = require('cors');
-const bcrypt = require('bcrypt-nodejs');
-const knex = require('knex');
+import express from 'express';
+import cors from 'cors';
+import bcrypt from 'bcrypt-nodejs';
+import knex from 'knex';
 
-const register = require('./controllers/register.js');
-const signin = require('./controllers/signin.js');
-const image  = require('./controllers/image.js');
+import register from './controllers/register.js';
+import signin from './controllers/signin.js';
+import image from './controllers/image.js';
 
 
 
@@ -13,15 +13,15 @@ const image  = require('./controllers/image.js');
 
 const db = knex({
     client: 'pg',
-  connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: {rejectUnauthorized: false},
-    host: process.env.DATABASE_HOST,
-    port : 5432,
-    user: process.env.DATABASE_USER,
-    password : process.env.DATABASE_PW,
-    database : process.env.DATABASE_DB
-  }
+    connection: {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false },
+        host: process.env.DATABASE_HOST,
+        port: 5432,
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PW,
+        database: process.env.DATABASE_DB
+    }
 })
 
 db.select('*').from('users').then(data => {
@@ -39,31 +39,31 @@ app.get('/', (req, res) => {
     res.send('success');
 })
 
-app.post('/signin',(req,res) => {signin.handleSignin(req,res, db, bcrypt)} )
+app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
 
-app.post('/register', (req, res) => {register.handleRegister(req, res, db, bcrypt)})
-  
+app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
+
 
 app.get('/profile/:id', (req, res) => {
     const { id } = req.params;
     let found = false;
     db.select('*').from('users').where({
         id: id
-    }).then(user=>{
-        if(user.length){
+    }).then(user => {
+        if (user.length) {
 
             res.json(user[0])
         }
-        else{
+        else {
             res.status(400).json('Not Found')
         }
     }).catch(err => err.status(400).json('not found'))
-  
+
 
 })
 
-app.put('/image', (req, res) => {image.handleImage(db, bcrypt,res,req)})
-app.post('/imageurl', (res,req) => image.handleApicall(res,req))
+app.put('/image', (req, res) => { image.handleImage(db, bcrypt, res, req) })
+app.post('/imageurl', (res, req) => image.handleApicall(res, req))
 app.listen(process.env.PORT || 3000, () => {
     console.log(`app is running on port ${process.env.PORT}`)
 })
