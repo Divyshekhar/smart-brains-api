@@ -1,7 +1,4 @@
-
-import Clarifai from 'clarifai';
-
-
+import fetch from 'node-fetch';
 
 const handleApicall = (req, res) => {
 
