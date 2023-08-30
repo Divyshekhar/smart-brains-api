@@ -3,9 +3,12 @@ import cors from 'cors';
 import bcrypt from 'bcrypt-nodejs';
 import knex from 'knex';
 
-import register from './controllers/register.js';
-import signin from './controllers/signin.js';
-import image from './controllers/image.js';
+import handleRegister from './controllers/register.js';
+import handleSignin from './controllers/signin.js';
+import handleImage from './controllers/image.js';
+import handleApicall from './controllers/image.js';
+
+
 
 
 
@@ -39,9 +42,9 @@ app.get('/', (req, res) => {
     res.send('success');
 })
 
-app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
+app.post('/signin', (req, res) => { handleSignin(req, res, db, bcrypt) })
 
-app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
+app.post('/register', (req, res) => { handleRegister(req, res, db, bcrypt) })
 
 
 app.get('/profile/:id', (req, res) => {
@@ -62,8 +65,8 @@ app.get('/profile/:id', (req, res) => {
 
 })
 
-app.put('/image', (req, res) => { image.handleImage(db, bcrypt, res, req) })
-app.post('/imageurl', (res, req) => image.handleApicall(res, req))
+app.put('/image', (req, res) => { handleImage(db, bcrypt, res, req) })
+app.post('/imageurl', (res, req) => handleApicall(res, req))
 app.listen(process.env.PORT || 3000, () => {
     console.log(`app is running on port ${process.env.PORT}`)
 })
